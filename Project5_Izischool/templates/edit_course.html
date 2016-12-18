@@ -1,0 +1,75 @@
+{% extends "Home.html" %}
+
+{% block list %}
+    {% csrf_token %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        function update_course(csrftoken, ex_id) {
+            var name = $("#name").val();
+            var subtitle = $("#subtitle").val();
+            var price = $("#price").val();
+//            var hitcount = $("#hitcount").val();
+            var image = $("#image").val();
+
+            $.ajax({
+                url: "/course/edit/" + ex_id + "/",
+                type: "POST",
+                data: {'name': name, 'subtitle': subtitle, 'image': image, 'price': price},
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function (json) {
+                    alert("Successful");
+                },
+                error: function (xhr, errmsg, err) {
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        }
+        ;
+
+    </script>
+    <h3 style="margin-left: 30px">Update Course</h3>
+    <table class="table-show" cellspacing="10px">
+        <tr>
+            <td>Name:</td>
+            <td><input class="text" type="text" id="name" name="name" value="{{ course.name }}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td rowspan="4"><img src="{{ form.image }}"></td>
+        </tr>
+        <tr>
+            <td>Subtitle:</td>
+            <td><input class="text" type="text" id="subtitle" name="subtitle" value="{{ form.subtitle }}"></td>
+        </tr>
+        <tr>
+            <td>Image:</td>
+            <td><input type="file" id="image" name="image" value="{{ form.image }}"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" id="price" name="image" value="{{ form.price }}"> $</td>
+        </tr>
+
+        <tr>
+            <td>
+
+            </td>
+            <td>
+                <!--<button class="btn btn-primary" type="button" onclick="update_course('{{ csrf_token }}', '{{ course.id }}')">Save</button>-->
+                <button class="btn btn-primary" type="button"
+                        onclick="update_course('{{ csrf_token }}', '{{ course.id }}')">Update
+                </button>
+                <a class="btn btn-primary" href="/course/detail/{{ course.id }}/">Back</a>
+            </td>
+        </tr>
+
+    </table>
+    <style>
+        .text {
+            width: 500px;
+        }
+    </style>
+{% endblock %}

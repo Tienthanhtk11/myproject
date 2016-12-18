@@ -1,0 +1,39 @@
+{% extends "Home.html" %}
+
+{% block list %}
+    <style>
+        .detail-course {
+            width: 1030px;
+            padding: 0px 20px 20px 20px;
+            float: left;
+            margin: 0px auto;
+        }
+
+        .detail-course img {
+            width: 350px;
+            height: 300px;
+        }
+    </style>
+    <script>
+        function Xoa() {
+            if (confirm("Bạn có chắc chắn muốn xoá không?")) {
+                window.location.href = "/course/delete/{{ detail.id }}/";
+            }
+            else {
+                return;
+            }
+        }
+    </script>
+    {% if detail %}
+        <div class="detail-course">
+            <h2>{{ detail.name }}</h2>
+            <img src="{{ detail.image }}">
+            <h4>Price:{{ detail.price }} $</h4>
+            <h4>{{ detail.subtitle }}</h4>
+
+        </div>
+    {% endif %}
+    <a class="btn btn-primary" style="margin: 0px 0px 20px 20px" href="/course/edit/{{ detail.id }}/">Edit Course</a>
+    <button style="margin: 0px 0px 20px 5px" type="button" class="btn btn-primary" onclick="Xoa()">Delete Course</button>
+    <a class="btn btn-primary" style="margin: 0px 0px 20px 5px" href="/course/">Back</a>
+{% endblock %}

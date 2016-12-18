@@ -1,0 +1,44 @@
+{% extends "Home.html" %}
+
+{% block list %}
+    <form action="/course/new/" method="post" enctype="multipart/form-data" data-ajax="false"> {% csrf_token %}
+    <h3 style="margin-left: 30px">Create a new Course</h3>
+    <table class="table-show" cellpadding="20" >
+        <tr>
+            <td>Name:</td>
+            <td class="text">{{ form.name }}</td>
+        </tr>
+        <tr>
+            <td>Subtitle:</td>
+            <td class="text">{{ form.subtitle }}</td>
+        </tr>
+         <tr>
+            <td>Image:</td>
+             <td>{{ form.image }}</td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td>{{ form.price }} $</td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+            <td>
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn btn-primary" href="/course/">Cancel</a>
+            </td>
+        </tr>
+        <tr>
+            <td>{% if errors %}
+            Có lỗi xảy ra!
+            {% endif %}</td>
+        </tr>
+    </table>
+    </form>
+<style>
+    .text input{
+    width: 400px;
+    }
+</style>
+{% endblock %}
